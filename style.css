@@ -12,11 +12,14 @@ body{
     margin-top: 1vw;
     margin-left: 2vw;
 }
-.navbar p{
+.navbar a{
     width: fit-content;
     margin: 10px;
     font-weight: 500;
     font-size: 1vw;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
 }
 
 
@@ -70,7 +73,9 @@ body{
 
 #aboutme{
     font-size: 2vw;
-    margin-left: 3vw;
+    margin-left: 3vw;    
+    padding-top: 3vw;
+
 }
 
 #aboutmeinfo{
@@ -282,7 +287,9 @@ body{
     color: #4285F4;
 }
 
-
+#viewon{
+    cursor: pointer;
+}
 @media screen and (max-width:500px){
     .navbar{
         display: flex;
