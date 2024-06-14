@@ -1,0 +1,584 @@
+
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: "Inter", sans-serif;
+    scroll-behavior: smooth;
+    height: 100vh;
+}
+
+.navbar{
+    display: flex;
+    margin-top: 1vw;
+    margin-left: 2vw;
+}
+.navbar p{
+    width: fit-content;
+    margin: 10px;
+    font-weight: 500;
+    font-size: 1vw;
+}
+
+
+.homepage{
+    height: 100vh;
+    margin-top: -3.5vw;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+    align-items: center;
+    scroll-snap-align: start;
+}
+
+.homepage img{
+    width: 25vw;
+    height: 25vw;
+    border-radius: 20px;
+}
+
+.homepageinfo{
+    margin-right: 4vw;
+}
+
+.homepageinfo p{
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: 600;
+    font-size: 1vw;
+}
+
+.homepageinfo p:nth-child(2){
+    color: black;
+    font-size: 3vw;
+    margin: 0px;
+    font-weight: bolder;
+}
+
+.homepageinfo p:nth-child(4){
+    width: 45vw;
+}
+
+.homepageinfo img{
+    width: fit-content;
+    height: 1.5vw;
+    justify-content: center;
+    margin: 0.5vw;
+}
+
+.aboutmecontainer{
+    height: 100vh;
+}
+
+#aboutme{
+    font-size: 2vw;
+    margin-left: 3vw;
+}
+
+#aboutmeinfo{
+    font-size: 1vw;
+    width: 80vw;
+    margin-left: 7vw;
+    color: #555;
+    font-weight: 600;
+    margin-top: 1vw;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+#collage{
+    width: 45vw;
+    display: flex;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    padding: 0.5vw;
+    border-radius: 1vw;
+    justify-content: center;
+    align-items: center;
+    margin-left: 12vw;
+    margin-top: 3vw;
+}
+
+#collage img{
+    width: fit-content;
+    height: 6vw;
+    margin-right: 2vw;
+}
+
+#collageinfo p:nth-child(1){
+    font-weight: bolder;
+}
+
+#collageinfo p:nth-child(2){
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.5);
+    width: 34vw;
+}
+#collageinfo p:nth-child(3){
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#mainskillscontainer{
+    margin-top: 10vw;
+    display: flex;
+    justify-content: space-between ;
+}
+
+
+.skills{
+    display: flex;
+    align-items: center;
+}
+
+#skilltext{
+    font-size: 2vw;
+    margin-left: 3vw;
+    margin-top: -2vw;
+    margin-right: 8vw;
+    margin-left: 5vw;
+    font-weight: 700;
+}
+
+#skilltextbottom{
+    color: rgba(190,229,15);
+    font-size: 1.5vw;
+    margin-right: 8vw;
+    margin-left: 5vw;
+    font-weight: 500;
+}
+
+.gridcontainer{
+    width: 50vw;
+    display: grid;
+    grid-template-columns: repeat(3,20vw);
+    gap: 20px;
+}
+
+.skillcontainer{
+    width: fit-content;
+    min-width: 10vw;
+   box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+   padding: 1vw;
+   border-radius: 20px;
+   align-content: center;
+   margin: 1.5vw;
+   font-weight: 700;
+}
+
+
+.skillcontainer img{
+    width: fit-content;
+    height: 5vw;
+}
+
+#skilllogo{
+    display: block;
+    margin: 0 auto;
+}
+
+.skillcontainer p{
+    font-size: 1vw;
+    margin-top: 2vw;
+}
+
+.star img{
+    width: fit-content;
+    height: 1vw;
+}
+
+#exploremyprojecttext{
+    font-size: 2vw;
+    margin-left: 3vw;
+    align-self: center;
+}
+
+
+
+#myprojectcontainer{
+    margin-top: 10vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#exploremyprojecttext{
+    font-weight: 700;
+}
+#exploremyprojecttext a{
+    color: #BEE50F;
+}
+
+.myprojectsection{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 10vw;
+}
+
+.myprojectinfocontainer{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 7vw;
+    align-items: center;
+    
+}
+
+.myprojectinfocontainertext{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.myprojectinfocontainertext p:nth-child(1){
+    width: 30vw;
+    font-size: 2vw;
+    font-weight: 700;
+}
+
+.myprojectinfocontainertext p:nth-child(2){
+    width: 30vw;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.myprojectinfocontainertext img{
+    width: fit-content;
+}
+
+#applogo{
+    width: 15vw;
+    height: 15vw;
+    border-radius: 2vw;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+
+}
+
+
+#applogo1{
+    width: 7vw;
+    height: 7vw;
+    border-radius: 1vw;
+    box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+    display: block;
+    margin: 0 auto;
+}
+
+
+
+.gridcontainer1{
+    width: 50vw;
+    display: grid;
+    grid-template-columns: repeat(3,20vw);
+    margin: 5vw;
+}
+
+
+
+#exploremoreongoogleplay{
+    font-weight: 700;
+    align-self: center;
+    margin-top: 5vw;
+}
+#exploremoreongoogleplay a{
+    color: #4285F4;
+}
+
+
+@media screen and (max-width:500px){
+    .navbar{
+        display: flex;
+        margin-top: 1vw;
+        margin-left: 2vw;
+    }
+    .navbar p{
+        width: fit-content;
+        margin: 10px;
+        font-weight: 500;
+        font-size: 2vw;
+    }
+    
+    
+    .homepage{
+        height:fit-content;
+        margin-top: 5vw;
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        align-items:center;
+        scroll-snap-align: start;
+        overflow-x: hidden;
+    }
+    
+    .homepage img{
+        width: 25vw;
+        height: 25vw;
+        border-radius: 20px;
+    }
+    
+    .homepageinfo{
+        margin-right: 6vw;
+        margin-top: 5vw;
+    }
+    
+    .homepageinfo p{
+        color: rgba(0, 0, 0, 0.5);
+        font-weight: 600;
+        font-size: 2vw;
+    }
+    
+    .homepageinfo p:nth-child(2){
+        color: black;
+        font-size: 3vw;
+        margin: 0px;
+        font-weight: bolder;
+    }
+    
+    .homepageinfo p:nth-child(4){
+        width: 50vw;
+    }
+    
+    .homepageinfo img{
+        width: fit-content;
+        height: 4vw;
+        justify-content: center;
+        margin: 0.5vw;
+    }
+    
+    .aboutmecontainer{
+        height: fit-content;
+        margin-top: 10vw;    }
+    
+    #aboutme{
+        font-size: 3vw;
+        margin-left: 3vw;
+    }
+    
+    #aboutmeinfo{
+        font-size: 2vw;
+        width: 80vw;
+        margin-left: 7vw;
+        color: #555;
+        font-weight: 600;
+        margin-top: 1vw;
+        line-height: 1.6;
+        text-align: justify;
+    }
+    
+    #collage{
+        width: 80vw;
+        display: flex;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        padding: 0.5vw;
+        border-radius: 1vw;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5vw;
+        margin-top: 5vw;
+    }
+    
+    #collage img{
+        width: fit-content;
+        height: 6vw;
+        margin-right: 2vw;
+    }
+    
+    #collageinfo p:nth-child(1){
+        font-weight: bolder;
+        font-size: 3vw;
+        width: max-content;
+    }
+    
+    #collageinfo p:nth-child(2){
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.5);
+        width: 65vw;
+        font-size: 2vw;
+    }
+    #collageinfo p:nth-child(3){
+        font-weight: 700;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 2vw;
+        width: max-content;
+    }
+    
+    #mainskillscontainer{
+        margin-top: 20vw;
+        display: flex;
+    }
+    
+    
+    .skills{
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+    
+    #skilltext{
+        font-size: 3vw;
+        font-weight: 700;
+    }
+    
+    #skilltextbottom{
+        color: rgba(190,229,15);
+        font-size: 2.5vw;
+        font-weight: 500;
+        text-align: center;
+    }
+    
+    .gridcontainer{
+        width: 90vw;
+        display: grid;
+        grid-template-columns: repeat(2,40vw);
+        justify-content: center;
+        margin-left: 3vw;
+    }
+    
+    .skillcontainer{
+        width: fit-content;
+        min-width: 30vw;
+       box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+       padding: 3vw;
+       border-radius: 20px;
+       align-content: center;
+       margin: 1.5vw;
+       font-weight: 700;
+    }
+    
+    
+    .skillcontainer img{
+        width: fit-content;
+        height: 8vw;
+    }
+    
+    #skilllogo{
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .skillcontainer p{
+        font-size: 2vw;
+        margin-top: 2vw;
+    }
+    
+    .star img{
+        width: fit-content;
+        height: 2vw;
+    }
+    
+    #exploremyprojecttext{
+        font-size: 3vw;
+        margin-left: 3vw;
+        align-self: center;
+    }
+    
+    
+    
+    #myprojectcontainer{
+        margin-top: 10vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        flex-wrap: wrap;
+        overflow-x: hidden;
+    }
+    
+    #exploremyprojecttext{
+        font-weight: 700;
+    }
+    #exploremyprojecttext a{
+        color: #BEE50F;
+    }
+    
+    .myprojectsection{
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        flex-direction: column;
+        margin-bottom: 10vw;
+    }
+    
+    .myprojectinfocontainer{
+        display: flex;
+        justify-content: space-evenly;
+        flex-direction: column;
+        margin-top: 7vw;
+        /* align-items: center; */
+    }
+
+    .myprojectinfocontainer:nth-child(2){
+        flex-direction: column-reverse;
+    }
+    
+    .myprojectinfocontainer:nth-child(4){
+        flex-direction: column-reverse;
+    }
+    
+    .myprojectinfocontainertext{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        /* justify-content: center;
+        align-items: center; */
+    }
+    
+    
+    .myprojectinfocontainertext p:nth-child(1){
+        width: 70vw;
+        font-size: 3vw;
+        font-weight: 700;
+        margin-top: 10vw;
+    }
+    
+    .myprojectinfocontainertext p:nth-child(2){
+        width: 70vw;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 2vw;
+    }
+    
+    .myprojectinfocontainertext img{
+        width: 25vw;
+        margin-top: 10vw;
+    }
+    
+    #applogo{
+        width: 20vw;
+        height: 20vw;
+        border-radius: 2vw;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        margin-top: 10vw;
+    
+    }
+    
+    
+    #applogo1{
+        width: 7vw;
+        height: 7vw;
+        border-radius: 1vw;
+        box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
+        display: block;
+        margin: 0 auto;
+    }
+    
+    
+    
+    .gridcontainer1{
+        width: 50vw;
+        display: grid;
+        grid-template-columns: repeat(3,20vw);
+        margin: 5vw;
+    }
+    
+    
+    
+    #exploremoreongoogleplay{
+        font-weight: 700;
+        align-self: center;
+        margin-top: 10vw;
+        margin-bottom: 50vw;
+        font-size: 3vw;
+    }
+    #exploremoreongoogleplay a{
+        color: #4285F4;
+    }
+    
+    
+}
