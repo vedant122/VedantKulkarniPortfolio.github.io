@@ -291,16 +291,18 @@ body{
     cursor: pointer;
 }
 @media screen and (max-width:500px){
+    body{
+        margin-left: 3vw;
+    }
     .navbar{
         display: flex;
         margin-top: 1vw;
         margin-left: 2vw;
     }
-    .navbar p{
-        width: fit-content;
+    .navbar a{
         margin: 10px;
         font-weight: 500;
-        font-size: 3vw;
+        font-size: 2vw;
     }
     
     
