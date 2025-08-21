@@ -4,299 +4,1124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Vedant Kulkarni | Mobile & Backend Developer</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500&display=swap"
+        rel="stylesheet">
 
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <style>
+        :root {
+            --background: #000000;
+            --primary-text: #EAECEF;
+            --secondary-text: #A0AEC0;
+            --accent-cyan: #00F5D4;
+            --accent-magenta: #9B5DE5;
+            --accent-blue: #00A9E0;
+            --card-bg: rgba(16, 18, 27, 0.5);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --header-bg: rgba(10, 10, 15, 0.5);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--primary-text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            overflow-x: hidden;
+            position: relative;
+            cursor: none;
+        }
+
+        body.loading {
+            overflow: hidden;
+        }
+
+        /* --- Preloader --- */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-text);
+            opacity: 0;
+            animation: fadeInOut 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInOut {
+
+            0%,
+            100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+
+        /* --- Custom Cursor --- */
+        #cursor-dot,
+        #cursor-light {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+        }
+
+        #cursor-light {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(0, 245, 212, 0.15) 0%, rgba(0, 245, 212, 0) 60%);
+        }
+
+        body:hover #cursor-dot {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        body:hover #cursor-light {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        a:hover~#cursor-dot,
+        .magnetic:hover~#cursor-dot {
+            transform: translate(-50%, -50%) scale(2.5);
+            background-color: rgba(0, 245, 212, 0.5);
+        }
+
+        a:hover~#cursor-light,
+        .magnetic:hover~#cursor-light {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
+
+        #gradient-canvas {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            --gradient-color-1: #12005e;
+            --gradient-color-2: #8e00b3;
+            --gradient-color-3: #00739c;
+            --gradient-color-4: #4a008f;
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            background: var(--header-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-color);
+            transform: translateY(-100%);
+            animation: slideDown 1s ease-out 0.5s forwards;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .navbar {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .navbar a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .navbar a:hover,
+        .navbar a.active {
+            color: var(--primary-text);
+        }
+
+        .navbar a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 2px;
+            background: var(--accent-cyan);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .navbar a:hover::after,
+        .navbar a.active::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        .section {
+            padding: 8rem 0;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 3rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        /* -- Animated Title -- */
+        .animated-title {
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .animated-title span {
+            display: inline-block;
+            transform: translateY(110%);
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.visible .animated-title span {
+            transform: translateY(0);
+        }
+
+        .section-title .emoji {
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        #home {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: left;
+        }
+
+        .hero-content h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(3rem, 7vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content .subtitle {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            color: var(--secondary-text);
+            margin-bottom: 2rem;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            color: var(--secondary-text);
+            max-width: 650px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- Shimmer Effect Button --- */
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            color: #000;
+            text-decoration: none;
+            font-weight: 700;
+            font-family: 'Space Grotesk', sans-serif;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0, 245, 212, 0.3);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+            will-change: transform;
+            height: 100%;
+        }
+
+        .card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(0, 245, 212, 0.5);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-magenta));
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            transform: scaleY(0);
+            transform-origin: top;
+            transition: transform 1.5s ease-in-out;
+        }
+
+        .reveal.visible .timeline::after {
+            transform: scaleY(1);
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 18px;
+            height: 18px;
+            right: -9px;
+            background-color: var(--background);
+            border: 4px solid var(--accent-cyan);
+            top: 35px;
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 2s infinite;
+            transition: transform 0.5s ease;
+            transform: scale(0);
+        }
+
+        .reveal.visible .timeline-item::after {
+            transform: scale(1);
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 245, 212, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 245, 212, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 245, 212, 0);
+            }
+        }
+
+        .timeline-left {
+            left: 0;
+        }
+
+        .timeline-right {
+            left: 50%;
+        }
+
+        .timeline-right::after {
+            left: -9px;
+        }
+
+        .timeline-content {
+            padding: 1.5rem;
+        }
+
+        .timeline-content h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.3rem;
+            color: var(--primary-text);
+        }
+
+        .timeline-content .company {
+            color: var(--secondary-text);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content .date {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-content ul {
+            list-style-type: none;
+            padding-left: 0;
+            color: var(--secondary-text);
+        }
+
+        .timeline-content ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.2rem;
+            position: relative;
+            font-size: 0.95rem;
+        }
+
+        .timeline-content ul li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--accent-blue);
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-tag {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--secondary-text);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-tag:hover {
+            color: var(--primary-text);
+            border-color: var(--accent-cyan);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 245, 212, 0.1);
+        }
+
+        .skill-tag::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(0, 245, 212, 0.5);
+            opacity: 0;
+            border-radius: 50%;
+            transform: scale(1, 1) translate(-50%, -50%);
+            transform-origin: 50% 50%;
+        }
+
+        .skill-tag:hover::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0) translate(-50%, -50%);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(30, 30) translate(-50%, -50%);
+                opacity: 0;
+            }
+        }
+
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            align-items: stretch;
+        }
+
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .project-card:hover::before {
+            left: 150%;
+        }
+
+        .project-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-card .category {
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: var(--secondary-text);
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .project-links a {
+            color: var(--secondary-text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .project-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        .education-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .education-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .education-card p {
+            color: var(--secondary-text);
+            margin-bottom: 0.25rem;
+        }
+
+        .education-card .date {
+            color: var(--accent-cyan);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 1.5rem 2rem;
+        }
+
+        .footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer .social-links a {
+            color: var(--secondary-text);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .footer .social-links a:hover {
+            color: var(--accent-cyan);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .footer svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .footer p {
+            color: var(--secondary-text);
+            font-size: 0.9rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+        }
+
+        .reveal [data-child] {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .reveal.visible [data-child] {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+
+            #cursor-dot,
+            #cursor-light {
+                display: none;
+            }
+
+            .navbar {
+                gap: 1.5rem;
+            }
+
+            .section {
+                padding: 6rem 0;
+            }
+
+            .timeline::after {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 50px;
+                padding-right: 10px;
+            }
+
+            .timeline-right {
+                left: 0%;
+            }
+
+            .timeline-item::after {
+                left: 11px;
+            }
+
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body class="loading">
 
-    <div class="navbar">
-        <a href="#Home">Home</a>
-        <a href="#AboutMe">About Me</a>
-        <a href="#MyProjects">My Projects</a>
+    <div id="preloader">
+        <div class="loader-text">VK</div>
     </div>
-    <div class="homepage" data-aos="fade-down">
-        <img src="./profile.jpg" alt="">
 
-        <section id="Home">
-            <div class="homepageinfo">
-                <p>Welcome I'm</p>
-                <p>Vedant Kulkarni</p>
-                <p>Android And Web Developer</p>
-                <p>Hi, I'm Vedant Kulkarni, a final year Computer Science Engineering student at MIT-WPU University.
-                    Passionate about software development and design, I have a strong foundation in various
-                    programming
-                    languages and tools. Welcome to my portfolio!</p>
-                <div class="profilelinks">
-                    <img src="./image1.png" alt="">
-                    <img src="./image2.png" alt="">
-                    <img src="./image3.png" alt="">
+    <div id="cursor-dot"></div>
+    <div id="cursor-light"></div>
+
+    <header class="header">
+        <nav class="navbar">
+            <a href="#home">Home</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <div class="hero-content">
+                <div class="reveal">
+                    <h1 id="hero-title" data-child>Vedant Kulkarni.</h1>
+                </div>
+                <div class="reveal">
+                    <p class="subtitle" data-child style="transition-delay: 0.1s;">Mobile Application & Backend
+                        Developer.</p>
+                </div>
+                <div class="reveal">
+                    <p class="description" data-child style="transition-delay: 0.2s;">
+                        Computer Science Engineering graduate skilled in building modern, user-friendly mobile apps
+                        using Android Native and Flutter. Proficient in backend development with Spring Boot to create
+                        secure, scalable REST APIs and integrate them seamlessly with front-end applications. Passionate
+                        about crafting efficient digital solutions, with strong problem-solving skills and a commitment
+                        to continuous learning.
+                    </p>
+                </div>
+                <div class="reveal">
+                    <a href="mailto:kulkarnivedant123@gmail.com" class="cta-button magnetic" data-child
+                        style="transition-delay: 0.3s;">Get In Touch</a>
                 </div>
             </div>
         </section>
-    </div>
 
-    <section id="AboutMe">
-        <div class="aboutmecontainer">
-            <p id="aboutme" data-aos="fade-up">About Me</p>
-            <p id="aboutmeinfo" data-aos="fade-up"> I am currently in my final year of Computer Science Engineering at
-                MIT-WPU University. I have always been passionate about technology and its potential to solve real-world
-                problems. Over the years, I have honed my skills in various domains of software development and design.
-
-                My journey began with a diploma in Computer Science from MIT Polytechnic, where I developed a strong
-                foundation in programming and software engineering principles. During my undergraduate studies, I
-                further
-                specialized in Android and web development, learning to create efficient, scalable, and user-friendly
-                applications.
-
-                I enjoy the creative process of UI/UX design, focusing on how users interact with technology and how to
-                make
-                their experiences as seamless as possible. I believe that good design is essential to the success of any
-                application, and I am dedicated to continuously improving my skills in this area.
-
-                Apart from my academic and professional pursuits, I am an avid learner who loves to stay updated with
-                the
-                latest trends and advancements in technology. Whether it's exploring new programming languages,
-                experimenting with cutting-edge tools, or participating in hackathons, I am always looking for
-                opportunities
-                to expand my knowledge and expertise.
-
-                In my free time, I enjoy reading tech blogs, contributing to open-source projects, and engaging with the
-                developer community. I also have a keen interest in photography and enjoy capturing moments that tell a
-                story.
-
-                Thank you for taking the time to learn more about me. I am excited to connect with like-minded
-                individuals
-                and explore potential collaborations. Feel free to reach out if you would like to discuss technology,
-                projects, or anything in between!
-            </p>
-
-            <div id="collage" data-aos="fade-up">
-                <img src="./collageimage.png" alt="">
-                <div id="collageinfo">
-                    <p>MIT-WPU University</p>
-                    <p>B.E. in Computer Science Engineering (Expected Graduation: Year)</p>
-                    <p>MIT Polytechnic, Diploma in Computer Science</p>
+        <section id="experience" class="section">
+            <div class="reveal">
+                <h2 class="section-title">
+                    <span class="animated-title">
+                        <span class="emoji">🚀</span>
+                        <span style="transition-delay: 0.1s;">Professional</span>
+                        <span style="transition-delay: 0.2s;">Experience</span>
+                    </span>
+                </h2>
+            </div>
+            <div class="timeline reveal" data-stagger-children>
+                <div class="timeline-item timeline-left" data-child>
+                    <div class="card timeline-content">
+                        <h3>Full Stack App Development Intern</h3>
+                        <p class="company">Namekart - Pune, MH</p>
+                        <p class="date">September 2024 - August 2025</p>
+                        <ul>
+                            <li>Developed a high-performance Flutter mobile app with real-time notifications,
+                                offline-first functionality, and advanced auction management tools.</li>
+                            <li>Built and maintained the Spring Boot backend API, including WebSocket-based real-time
+                                auction updates and REST endpoints for bidding.</li>
+                            <li>Implemented Microsoft authentication, SQLite local storage, and Firestore
+                                synchronization for secure and reliable user sessions.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-right" data-child>
+                    <div class="card timeline-content">
+                        <h3>MERN Developer</h3>
+                        <p class="company">CODEX Labs</p>
+                        <p class="date">January 2021 - May 2021</p>
+                        <ul>
+                            <li>Assisted in developing and maintaining web applications using the MERN stack (MongoDB,
+                                Express.js, React, Node.js).</li>
+                            <li>Contributed to building responsive website features and implementing company-specific
+                                requirements.</li>
+                            <li>Gained hands-on experience with version control (Git) and agile development practices.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="timeline-item timeline-left" data-child>
+                    <div class="card timeline-content">
+                        <h3>AI/ML Industrial Trainee</h3>
+                        <p class="company">Intrainz - Pune, MH</p>
+                        <p class="date">September 2022</p>
+                        <ul>
+                            <li>Gained foundational knowledge and hands-on experience in Artificial Intelligence and
+                                Machine Learning through practical projects and workshops.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div id="collage" data-aos="fade-up">
-                <img src="./codelabslogo.png" alt="">
-                <div id="collageinfo">
-                    <p>CODIXLABS</p>
-                    <p>Designated as a Software Development Intern</p>
-                    <p> 24 July 2021 to 6th September 2021</p>
+        <section id="projects" class="section">
+            <div class="reveal">
+                <h2 class="section-title">
+                    <span class="animated-title">
+                        <span class="emoji">💡</span>
+                        <span style="transition-delay: 0.1s;">My</span>
+                        <span style="transition-delay: 0.2s;">Projects</span>
+                    </span>
+                </h2>
+            </div>
+            <div class="projects-grid" data-stagger-children>
+                <div class="card project-card reveal" data-child>
+                    <h3>Personal Android Apps</h3>
+                    <p class="category">Google Play Store Publisher</p>
+                    <p>Developed and published 10+ production-ready apps (AI PDF Viewer, ClassicFlow Launcher,
+                        SafeKeep). Features include real-time notifications, offline-first storage with SQLite, secure
+                        authentication (OAuth/Firebase), and custom UI/UX.</p>
+                    <div class="project-links">
+                        <a href="https://play.google.com/store/apps/developer?id=DevDuo%27s" target="_blank">View on
+                            Google Play &rarr;</a>
+                    </div>
+                </div>
+                <div class="card project-card reveal" data-child>
+                    <h3>eCommerce Website</h3>
+                    <p class="category">Full Stack / MERN Project</p>
+                    <p>Developed a responsive eCommerce platform with React.js, Node.js, Express.js, and MongoDB. It
+                        incorporates user authentication, product management, and order processing functionalities.</p>
+                    <div class="project-links">
+                        <a href="https://bit.ly/VedantKulkarniPortfolio" target="_blank">View Project &rarr;</a>
+                    </div>
+                </div>
+                <div class="card project-card reveal" data-child>
+                    <h3>Social Media Website</h3>
+                    <p class="category">Full Stack / MERN Project</p>
+                    <p>Created a dynamic MERN stack application featuring user profiles, post creation, and social
+                        interactions like following and commenting, demonstrating proficiency in building complex,
+                        interactive web apps.</p>
+                    <div class="project-links">
+                        <a href="https://bit.ly/VedantKulkarniPortfolio" target="_blank">View Project &rarr;</a>
+                    </div>
+                </div>
+                <div class="card project-card reveal" data-child>
+                    <h3>Task Manager Website</h3>
+                    <p class="category">Full Stack / MERN Project</p>
+                    <p>Built a MERN stack task manager with full CRUD functionality and a clean, responsive user
+                        interface for effective task organization and tracking.</p>
+                    <div class="project-links">
+                        <a href="https://bit.ly/VedantKulkarniPortfolio" target="_blank">View Project &rarr;</a>
+                    </div>
                 </div>
             </div>
+        </section>
+
+        <section id="skills" class="section">
+            <div class="reveal">
+                <h2 class="section-title">
+                    <span class="animated-title">
+                        <span class="emoji">🧠</span>
+                        <span style="transition-delay: 0.1s;">Technical</span>
+                        <span style="transition-delay: 0.2s;">Skills</span>
+                    </span>
+                </h2>
+            </div>
+            <div class="skills-grid" data-stagger-children>
+                <div class="card skill-category reveal" data-child>
+                    <h3><span class="emoji">💻</span> Languages</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Java</span>
+                        <span class="skill-tag">Dart</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">C</span>
+                    </div>
+                </div>
+                <div class="card skill-category reveal" data-child>
+                    <h3><span class="emoji">🛠️</span> Frameworks & Tech</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">Flutter</span>
+                        <span class="skill-tag">Android Native</span>
+                        <span class="skill-tag">Spring Boot</span>
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">MERN Stack</span>
+                        <span class="skill-tag">iOS Development</span>
+                    </div>
+                </div>
+                <div class="card skill-category reveal" data-child>
+                    <h3><span class="emoji">☁️</span> Databases & Cloud</h3>
+                    <div class="skills-list">
+                        <span class="skill-tag">MongoDB</span>
+                        <span class="skill-tag">Firebase</span>
+                        <span class="skill-tag">Firestore</span>
+                        <span class="skill-tag">SQLite</span>
+                        <span class="skill-tag">Cloud Services</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="education" class="section">
+            <div class="reveal">
+                <h2 class="section-title">
+                    <span class="animated-title">
+                        <span class="emoji">🎓</span>
+                        <span style="transition-delay: 0.1s;">Education</span>
+                    </span>
+                </h2>
+            </div>
+            <div class="education-grid" data-stagger-children>
+                <div class="card education-card reveal" data-child>
+                    <h3>B.Tech in Computer Science & Engineering</h3>
+                    <p>MIT World Peace University, Pune, MH</p>
+                    <p class="date">2022 - 2025</p>
+                </div>
+                <div class="card education-card reveal" data-child>
+                    <h3>Diploma in Computer Science</h3>
+                    <p>MIT WPU School of Polytechnic</p>
+                    <p class="date">2019 - 2022</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="social-links">
+            <a href="https://www.linkedin.com/in/vedantkulkarni123/" target="_blank" aria-label="LinkedIn"
+                class="magnetic">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.25 6.5 1.75 1.75 0 016.5 8.25zM19 19h-3v-4.75c0-1.4-1.2-2.5-2.5-2.5S11 12.85 11 14.25V19h-3v-9h2.9v1.375C12.4 10.4 13.85 9.5 15.25 9.5c2.75 0 3.75 2 3.75 4.5z">
+                    </path>
+                </svg>
+            </a>
+            <a href="https://bit.ly/VedantKulkarniPortfolio" target="_blank" aria-label="GitHub" class="magnetic">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.942.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.578.688.48A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z">
+                    </path>
+                </svg>
+            </a>
         </div>
-    </section>
+        <p>Designed & Built by Vedant Kulkarni</p>
+    </footer>
 
-    <div id="mainskillscontainer">
-        <div class="skills" data-aos="fade-up">
-            <div>
-                <p id="skilltext" data-aos="fade-up">Let's Explore Popular</p>
-                <p id="skilltextbottom">Skill & Experiences</p>
-            </div>
-            <div class="gridcontainer">
-                <div class="skillcontainer">
-                    <img src="./androidimg.png" alt="" id="skilllogo">
-                    <p>Android App<Br>Development</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-
-                <div class="skillcontainer">
-                    <img src="./web development.png" alt="" id="skilllogo">
-                    <p>Web Development</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-
-
-
-                <div class="skillcontainer">
-                    <img src="./figmaimg.png" alt="" id="skilllogo">
-                    <p>UIUX Development</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-
-
-
-                <div class="skillcontainer">
-                    <img src="./ccpp.png" alt="" id="skilllogo">
-                    <p>C & C++</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-
-
-
-                <div class="skillcontainer">
-                    <img src="./mysql.png" alt="" id="skilllogo">
-                    <p>MySQL</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-
-                <div class="skillcontainer">
-                    <img src="./mern.png" alt="" id="skilllogo">
-                    <p>Full Stack/MERN</p>
-                    <div class="star">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                        <img src="./star.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <section id="MyProjects">
-        <div id="myprojectcontainer">
-            <p id="exploremyprojecttext" data-aos="fade-up">Explore My <a>Android</a> Projects</p>
-            <div class="myprojectsection" data-aos="fade-up">
-                <div class="myprojectinfocontainer">
-                    <img src="./skillsprint.png" alt="" id="applogo" data-aos="fade-right">
-                    <div class="myprojectinfocontainertext" data-aos="fade-left">
-                        <p>SkillSprint</p>
-                        <p>SkillSprint is your ultimate companion to mastering programming languages and honing your
-                            coding
-                            skills. Whether you're a beginner or aiming to advance your expertise, SkillSprint provides
-                            a
-                            comprehensive learning experience.
-                        </p>
-                        <img src="./viewon.png" alt="" id="viewon"
-                            data-link="https://play.google.com/store/apps/details?id=com.devduos.skillsprint">
-                    </div>
-                </div>
-
-                <div class="myprojectinfocontainer">
-                    <div class="myprojectinfocontainertext" data-aos="fade-right">
-                        <p>Encrypted Document Photo Saver</p>
-                        <p>Encrypted Documents Photos Saver is your trusted vault for securing and organizing
-                            confidential
-                            files and cherished memories. Our app offers robust encryption for documents and photos,
-                            ensuring your sensitive information remains private.
-                        </p>
-                        <img src="./viewon.png" alt="" id="viewon"
-                            data-link="https://play.google.com/store/apps/details?id=com.devduos.encryptedphotosvideoshider">
-                    </div>
-                    <img src="./encrypteddocumentsaver.png" alt="" id="applogo" data-aos="fade-left">
-                </div>
-
-                <div class="myprojectinfocontainer">
-                    <img src="./encruptedpasswordsaver.webp" alt="" id="applogo" data-aos="fade-right">
-                    <div class="myprojectinfocontainertext" data-aos="fade-left">
-                        <p>Encrypted Password Saver</p>
-                        <p>Encrypted Password Saver: Safeguard your digital credentials with advanced encryption and
-                            secure
-                            authentication. Manage passwords effortlessly, utilizing fingerprint login for enhanced
-                            privacy.
-                            Your key to a worry-free and secure digital experience.
-                        </p>
-                        <img src="./viewon.png" alt="" id="viewon"
-                            data-link="https://play.google.com/store/apps/details?id=com.devduos.encryptedpassword">
-                    </div>
-                </div>
-
-                <div class="myprojectinfocontainer">
-                    <div class="myprojectinfocontainertext" data-aos="fade-right">
-                        <p>ClassicFlow Launcher</p>
-                        <p>ClassicFlow Launcher redefines app interaction, prioritizing seamless, one-handed usability
-                            for
-                            an efficient mobile experience. Tailored for swift and effortless navigation, this app
-                            launcher
-                            streamlines access to your favorite apps, enhancing speed and convenience.
-                        </p>
-                        <img src="./viewon.png" alt="" id="viewon"
-                            data-link="https://play.google.com/store/apps/details?id=com.devduos.smoothlauncher">
-                    </div>
-                    <img src="./classicflowlauncher.png" alt="" id="applogo" data-aos="fade-left">
-                </div>
-                <p id="exploremoreongoogleplay">Explore More On <a>Google Play</a></p>
-            </div>
-        </div>
-    </section>
-
-
-    <section id="MyProjects">
-        <div id="myprojectcontainer">
-            <p id="exploremyprojecttext" data-aos="fade-up">Explore My <a>Full Stack / MERN</a> Projects</p>
-            <div class="myprojectsection" data-aos="fade-up">
-                <div class="myprojectinfocontainer">
-                    <img src="./ecommernce.png" alt="" id="applogo" data-aos="fade-right">
-                    <div class="myprojectinfocontainertext" data-aos="fade-left">
-                        <p>E-commerce Website</p>
-                        <p>
-                            A responsive web application showcasing products with features like product listing,
-                            detailed product pages, search, and category filtering.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="myprojectinfocontainer">
-                    <div class="myprojectinfocontainertext" data-aos="fade-right">
-                        <p>Social Media Website</p>
-                        <p>A dynamic social media platform allowing users to create profiles, post updates, follow other
-                            users, and interact through likes and comments.
-                        </p>
-                    </div>
-                    <img src="./socialmedia.png" alt="" id="applogo" data-aos="fade-left">
-                </div>
-
-                <div class="myprojectinfocontainer" style="margin-bottom: 10vw;">
-                    <img src="./taskmanager.png" alt="" id="applogo" data-aos="fade-right">
-                    <div class="myprojectinfocontainertext" data-aos="fade-left">
-                        <p>Task Manager Website</p>
-                        <p>A comprehensive task management platform that enables users to create, track, and manage
-                            their daily tasks and projects efficiently.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gradient-animator@1.1.1/dist/GradientAnimator.min.js"></script>
     <script>
-        AOS.init();
+        document.addEventListener('DOMContentLoaded', () => {
 
-        document.getElementById("viewon").addEventListener("click", function () {
-            var link = this.getAttribute("data-link");
-            window.location.href = link;
+            // --- Preloader ---
+            const preloader = document.getElementById('preloader');
+            window.addEventListener('load', () => {
+                preloader.classList.add('fade-out');
+                document.body.classList.remove('loading');
+            });
+
+            // --- Custom Cursor ---
+            const cursorDot = document.getElementById('cursor-dot');
+            const cursorLight = document.getElementById('cursor-light');
+            window.addEventListener('mousemove', e => {
+                cursorDot.style.left = `${e.clientX}px`;
+                cursorDot.style.top = `${e.clientY}px`;
+                cursorLight.style.left = `${e.clientX}px`;
+                cursorLight.style.top = `${e.clientY}px`;
+            });
+
+            // --- Initialize Gradient Background (with error handling) ---
+            try {
+                if (typeof GradientAnimator !== 'undefined') {
+                    const gradient = new GradientAnimator();
+                    gradient.init('gradient-canvas');
+                }
+            } catch (error) {
+                console.error('Could not initialize gradient animation:', error);
+                const canvas = document.getElementById('gradient-canvas');
+                if (canvas) {
+                    canvas.style.background = 'linear-gradient(45deg, #12005e, #8e00b3, #00739c)';
+                }
+            }
+
+            // --- Text Scramble Effect ---
+            const heroTitle = document.getElementById('hero-title');
+            if (heroTitle && window.innerWidth > 768) { // Only run for non-mobile
+                class TextScramble {
+                    constructor(el) { this.el = el; this.chars = '!<>-_\\/[]{}—=+*^?#________'; this.update = this.update.bind(this); }
+                    setText(newText) {
+                        const oldText = this.el.innerText;
+                        const length = Math.max(oldText.length, newText.length);
+                        const promise = new Promise(resolve => this.resolve = resolve);
+                        this.queue = [];
+                        for (let i = 0; i < length; i++) {
+                            const from = oldText[i] || ''; const to = newText[i] || '';
+                            const start = Math.floor(Math.random() * 40); const end = start + Math.floor(Math.random() * 40);
+                            this.queue.push({ from, to, start, end });
+                        }
+                        cancelAnimationFrame(this.frameRequest); this.frame = 0; this.update(); return promise;
+                    }
+                    update() {
+                        let output = ''; let complete = 0;
+                        for (let i = 0, n = this.queue.length; i < n; i++) {
+                            let { from, to, start, end, char } = this.queue[i];
+                            if (this.frame >= end) { complete++; output += to; }
+                            else if (this.frame >= start) {
+                                if (!char || Math.random() < 0.28) { char = this.randomChar(); this.queue[i].char = char; }
+                                output += `<span>${char}</span>`;
+                            } else { output += from; }
+                        }
+                        this.el.innerHTML = output;
+                        if (complete === this.queue.length) { this.resolve(); }
+                        else { this.frameRequest = requestAnimationFrame(this.update); this.frame++; }
+                    }
+                    randomChar() { return this.chars[Math.floor(Math.random() * this.chars.length)]; }
+                }
+                setTimeout(() => {
+                    const fx = new TextScramble(heroTitle);
+                    fx.setText(heroTitle.textContent);
+                }, 1000);
+            }
+
+            // --- Scroll Reveal & Stagger Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+
+                        // Stagger children if attribute is present
+                        if (entry.target.hasAttribute('data-stagger-children')) {
+                            const children = entry.target.querySelectorAll('[data-child]');
+                            children.forEach((child, index) => {
+                                child.style.transitionDelay = `${index * 0.15}s`;
+                            });
+                        }
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // --- Active Nav Link on Scroll ---
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.navbar a');
+            const sectionObserver = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const activeId = entry.target.id;
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+                        });
+                    }
+                });
+            }, { rootMargin: '-50% 0px -50% 0px' });
+            sections.forEach(section => sectionObserver.observe(section));
+
+            // --- 3D Card Tilt Effect ---
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const { width, height } = rect;
+                    const rotateX = (y / height - 0.5) * -15;
+                    const rotateY = (x / width - 0.5) * 15;
+                    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+                });
+            });
+
+            // --- Magnetic Effect ---
+            const magneticElements = document.querySelectorAll('.magnetic');
+            magneticElements.forEach(el => {
+                el.addEventListener('mousemove', function (e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - (rect.left + rect.width / 2);
+                    const y = e.clientY - (rect.top + rect.height / 2);
+                    this.style.transform = `translate(${x * 0.2}px, ${y * 0.3}px)`;
+                    this.style.transition = `transform 0.1s ease-out`;
+                });
+                el.addEventListener('mouseleave', function () {
+                    this.style.transform = 'translate(0, 0)';
+                    this.style.transition = `transform 0.3s cubic-bezier(0.19, 1, 0.22, 1)`;
+                });
+            });
         });
     </script>
 </body>
